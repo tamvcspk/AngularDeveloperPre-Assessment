@@ -1,0 +1,30 @@
+<div mat-dialog-content>
+  <p>{{data.question}}</p>
+  <form [formGroup]="answerForm" style="display: flex; flex-direction: column;">
+    <ng-container *ngIf="data.questionType === 'paragraph'">
+      <mat-form-field appearance="fill">
+        <textarea matInput formControlName="paragraphAnswer"></textarea>
+      </mat-form-field>
+    </ng-container>
+
+    <ng-container *ngIf="data.questionType === 'checkbox'">
+      <ng-container formArrayName="checkboxAnswers">
+        <ng-container *ngFor="let option of checkboxAnswers.controls; let i=index">
+          <mat-checkbox class="example-margin" [formControlName]="i">{{data.options[i]}} {{i}}</mat-checkbox>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="data.allowOwnAnswer">
+        <mat-checkbox class="example-margin" [(ngModel)]="otherAnswer"
+          [ngModelOptions]="{standalone: true}">Others</mat-checkbox>
+        <mat-form-field appearance="fill" *ngIf="otherAnswer">
+          <input matInput formControlName="otherAnswer">
+        </mat-form-field>
+      </ng-container>
+    </ng-container>
+
+  </form>
+  <button mat-button color="primary" (click)="addNewQuestion()">Add new question</button>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button cdkFocusInitial (click)="reviewMyAnswer()">Review my answer ></button>
+</div>

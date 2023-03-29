@@ -1,0 +1,14 @@
+<p>{{question.question}}</p>
+<ng-container *ngIf="question.questionType === 'paragraph'">
+  <p>{{question.answer?.paragraphAnswer}}</p>
+</ng-container>
+
+<ng-container *ngIf="question.questionType === 'checkbox'">
+  <ng-container *ngFor="let option of question?.answer.checkboxAnswers;let i=index">
+    <p *ngIf="option">{{question.options[i]}}</p>
+  </ng-container>
+  <ng-container *ngIf="question.allowOwnAnswer">
+    <p>{{question?.answer.otherAnswer}}</p>
+  </ng-container>
+</ng-container>
+<button mat-button color="primary" (click)="back()">Back To Form Builder</button>
